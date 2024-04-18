@@ -3,23 +3,29 @@
 set -e
 
 # Key scan for github.com
+echo "Key scan for github.com"
 ssh-keyscan github.com > /root/.ssh/known_hosts
 
 # Set ssh key for subtree
+echo "Set ssh key for subtree"
 echo "${INPUT_DEPLOY_KEY}" >> /root/.ssh/subtree
 chmod 0600 /root/.ssh/subtree
 
 # Generate sha256 of the downstream repo name
+echo "Generate sha256 of the downstream repo name"
 SPLIT_DIR=$(echo -n "${INPUT_REPO}" | sha256sum)
 SPLIT_DIR="${SPLIT_DIR::-3}"
 
 # Get subtree repository into split directory
+echo "Get subtree repository into split directory"
 git init --bare "${SPLIT_DIR}"
 
 # Create the subtree split branch
+echo "Create the subtree split branch"
 git subtree split --prefix="${INPUT_PATH}" -b split
 
 # Check for force push to remote
+echo "Check for force push to remote"
 if [ "$INPUT_FORCE" == "true" ]; then
 	PUSH_ARGS="-f"
 fi
@@ -35,6 +41,7 @@ if [ "$INPUT_BRANCH" == "" ]; then
 fi
 
 # Push to the subtree directory
+echo "Push to the subtree directory"
 git push "${PUSH_ARGS}" "${SPLIT_DIR}" split:"$INPUT_BRANCH"
 
 cd "${SPLIT_DIR}"
