@@ -11,6 +11,9 @@ echo "Set ssh key for subtree"
 echo "${INPUT_DEPLOY_KEY}" >> /root/.ssh/subtree
 chmod 0600 /root/.ssh/subtree
 
+eccho "Show repo content"
+ls -la .
+
 # Generate sha256 of the downstream repo name
 echo "Generate sha256 of the downstream repo name"
 SPLIT_DIR=$(echo -n "${INPUT_REPO}" | sha256sum)
