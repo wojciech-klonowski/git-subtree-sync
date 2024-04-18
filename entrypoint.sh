@@ -1,15 +1,13 @@
 #!/bin/sh -l
 
-eccho "Show repo content"
 ls -la .
 
-echo "current branch"
-echo "${REF_NAME}"
+echo "path"
+echo $INPUT_PATH
 
-echo Reserved for REPO_NAME=${GITHUB_REPOSITORY##*/}
-echo GITHUB_REF=${GITHUB_REF}
-echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
-echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
+echo "current branch"
+SOURCE_BRANCH=${GITHUB_REF##*/}
+echo $SOURCE_BRANCH
 
 ## Generate sha256 of the downstream repo name
 #echo "Generate sha256 of the downstream repo name"
